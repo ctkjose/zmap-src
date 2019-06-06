@@ -4,22 +4,24 @@
 
 ZMAP is a small vanilla javascript library to render interactive maps similar to [Leaflet.js](https://leafletjs.com), `OpenLayers` or `MapBox` build by [ExponentialWorks](https://exponentialworks.com).
 
-ZMAP is just the core functionality that most of us really need. Is meant to be minimal, without dependancies, no third-party libraries and just good old javascript code that works in most mobile and desktop browsers. (It doesn't even use any sassy ES6 features!!!)  
+ZMAP is just the core functionality that most of us really need. Is meant to be minimal, without dependancies, no third-party libraries and just good old javascript code that works in most mobile and desktop browsers. (It doesn't even use any sassy ES6 features!!!)
 
 The code is easy to hack and modify. The zmap library doesn't require any special development environment or build tool chain.
 
-ZMAP is build for [OpenStreetMap](https://www.openstreetmap.org) so you don't have to worry about api-keys and fees. (You may also use other tile providers [slippy maps](https://en.wikipedia.org/wiki/Tiled_web_map).)
+Our goal is to kkep the code base small and compact, we include the features most commonly used and make many assumptions about the use cases to simplify the code. 
+
+ZMAP is build to work out of the box with [OpenStreetMap](https://www.openstreetmap.org) (OSM) and OSM APIs like Nominatim and Overpass. (You may also use other tile providers [slippy maps](https://en.wikipedia.org/wiki/Tiled_web_map).) A lot of the code follows OSM coneventions. The code uses [web-mercator](https://wiki.openstreetmap.org/wiki/Mercator) (pseudo mercator projection), [WGS84](https://gisgeography.com/wgs84-world-geodetic-system/) and [North American Datum](https://www.ngs.noaa.gov/datums/horizontal/north-american-datum-1983.shtml) with GRS80 (Geodetic Reference System Ellipsoid) of 6378137.
 
 ZMAP include functionality for markers, polygons, circles, polylines, and many useful geospatial functions.
-
-> Previous code used canvas for polygons, circles and polylines, but they now render into an SVG. The original code is still available and it works if you need it.
 
 ZMAP was born from [modestmaps](https://github.com/modestmaps/modestmaps-js) the original library behind "mapbox.js". It attempts to have an API similar to [Leaflet.js](https://leafletjs.com).
 
 A lot of the fancy geospatial code in ZMAP is from the great mind of Chris Veness and his [Latitude/longitude spherical geodesy tools](https://github.com/chrisveness/geodesy) .
 
 
+
 ### WIP Status ###
+
 
 Touch and pinch are implemented and working fine on my iphone but needs more testing in Android browsers in particular stock browsers.
 
