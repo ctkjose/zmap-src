@@ -22,6 +22,7 @@ A lot of the fancy geospatial code in ZMAP is from the great mind of Chris Venes
 
 ### WIP Status ###
 
+Working on adding optional marker functionality for [DHS's map symbology](https://www.fgdc.gov/HSWG/) (incidents, natural events and operations).
 
 Touch and pinch are implemented and working fine on my iphone but needs more testing in Android browsers in particular stock browsers.
 
@@ -29,7 +30,7 @@ I moved the polygon code to use SVG instead of canvas. This should allow to impl
 
 Ability to get a LatLng in UTM and USNG/MGRS/NATO coordinates is implemented. More work pending to add conversion from these coordinates.
 
-ZMAP is build on the WGS84 datum/projection. Code is in place to be able to add support for other projections and datums, with hopefully little refactoring. (WGS84 is still hardwired in some places.)
+ZMAP is build on the WGS84 datum/projection. Code is in place to be able to add support for other projections and datums, but not a priority.
 
 Tile Cache is not smart and will keep growing as big as your browser allows it. This should not be an issue for most use cases but I want to add logic to purge cache by aging or size.
 

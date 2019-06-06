@@ -23,7 +23,7 @@ zmap.geo = {
 	//  https://wiki.openstreetmap.org/wiki/Mercator
 	//  https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
 	wgs84:{
-		kEarthRadius: 6371000,
+		kEarthRadius: 6378137.0,
 		kinverse: 298.257223563,
 		degreeCoordinateToTile: function(lat, lng, zoom){
 			//lat, lng in degrees
