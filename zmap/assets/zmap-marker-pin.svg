@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="40" height="40" viewBox="0, 0, 40, 40">
+  <defs>
+    <linearGradient id="Gradient_1" gradientUnits="userSpaceOnUse" x1="18.5" y1="23" x2="21.5" y2="23">
+      <stop offset="0" stop-color="#D8D8D8"/>
+      <stop offset="1" stop-color="#949292"/>
+    </linearGradient>
+  </defs>
+  <g id="zmap-marker-pin" transform="translate(0, 0)">
+    <path d="M21.5,7 L21.5,16.062 L18.5,16.062 L18.5,37 L20,39 L21.5,37 L21.5,23 z" fill="url(#Gradient_1)" id="pin"/>
+    <path d="M20,17 C15.582,17 12,13.418 12,9 C12,4.582 15.582,1 20,1 C24.418,1 28,4.582 28,9 C28,13.418 24.418,17 20,17 z" fill="#F78F8F" id="pinhead"/>
+    <path d="M20,1 C24.418,1 28,4.582 28,9 C28,13.418 24.418,17 20,17 C15.582,17 12,13.418 12,9 C12,4.582 15.582,1 20,1 z M20,2 C16.134,2 13,5.134 13,9 C13,12.866 16.134,16 20,16 C23.866,16 27,12.866 27,9 C27,5.134 23.866,2 20,2 z" fill="#C74343" id="pinhead-rim"/>
+  </g>
+</svg>

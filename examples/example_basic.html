@@ -1,0 +1,141 @@
+<html>
+    <head>
+        <title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../zmap/assets/zmap.css" crossorigin=""/>
+		<script src="../zmap/src/zmap_map.js"></script>
+		<script src="../zmap/src/zmap_utils.js"></script>	
+		<script src="../zmap/src/zmap_geo.js"></script>
+		<script src="../zmap/src/zmap_layer.js"></script>
+		<script src="../zmap/src/zmap_controlLayer.js"></script>
+		<script src="../zmap/src/zmap_tileLayer.js"></script>
+		<script src="../zmap/src/zmap_polygonLayer.js"></script>
+		<script src="../zmap/src/zmap_markerLayer.js"></script>
+
+		<script src="./polyAguadilla.js"></script>
+
+        <script type="text/javascript">
+		function runTest(){
+			
+			//Set Map Options
+			//zmap.configure({"test":"jose"});
+
+			map = zmap.create("#mymap", {zoom: 15, center:[18.427831712734044, -67.154815531596], maxZoom: 19, minZoom:1});
+
+			//osm = new zmap.tileLayer("https://{S}.tile.openstreetmap.org/{Z}/{X}/{Y}.png", [ 'a', 'b', 'c' ]);
+			//map.addLayer(osm);
+
+			//var osm = zmap.osmLayer();
+			//osm.addTo(map);
+			zmap.osmLayer().addTo(map);
+			
+			map.requestDraw();
+			
+
+			var markerAguadilla = zmap.marker([18.427831712734044, -67.154815531596], {
+				title: "Aguadilla",
+				iconURL: "zmap-marker-green.svg",
+				opacity: 0.7
+			});
+			markerAguadilla.addTo(map);
+			//move a marker
+			//marker.setLatLng([18.470308, -66.123490]);
+
+		
+			/*
+			var p1 = zmap.LatLng(50.06638888888889, -5.714722222222222);
+			var p2 = zmap.LatLng(58.64388888888889, -3.0700000000000003);
+
+			var c = zmap.LatLng.angle(p1,p2);
+			var d = zmap.LatLng.distance(p1,p2);
+
+			var bearin = zmap.LatLng.bearing(p1,p2);
+
+			console.log("Distance=%f, RadiansAngle=%f, Bearin=%f", d, c, bearin);
+			*/
+	
+		}
+		function testMarkers(){
+			var marker = zmap.marker([18.50519374209859, -67.12562263011934], {});
+			marker.addTo(map);
+
+			var markerAguadilla = zmap.marker([18.427831712734044, -67.154815531596], {
+				title: "Aguadilla",
+				iconURL: "zmap-marker-green.svg"
+			});
+			markerAguadilla.addTo(map);
+
+			var markerMoca = zmap.marker([18.395134387931233, -67.11445683159602], {title: "Moca", opacity: .8});
+			markerMoca.addTo(map);
+
+
+			var p = marker.getLatLng().moveBy(50, 90);
+			var m1 = zmap.marker(p, {iconURL: "zmap-poi-hospital.svg"});
+			m1.addTo(map);
+
+			map.panTo(marker);
+
+		
+
+			amarker = marker;
+
+		}
+		function testMarkersASOverlay(){
+			var layer = new zmap.markerLayer("overlay");
+			map.addLayer(layer);
+
+			var marker = zmap.marker([18.50519374209859, -67.12562263011934], {});
+			marker.addTo(layer); 
+			//add marker to this new overlay layer, if we add to map it goes to the built in marker layer
+
+			var markerAguadilla = zmap.marker([18.427831712734044, -67.154815531596], {title: "Aguadilla"});
+			markerAguadilla.addTo(map);
+		}
+		function testPoly(){
+			//Since our data is from a GeoJSON "feature" object, we use zmap.polygon.fromGeoJSONFeature() to get a polygon
+			var poly = zmap.polygon.fromGeoJSONFeature(aguadillaFeature);
+			
+			lyPoly = zmap.polygonLayer.polygon(poly);
+			lyPoly.addTo(map);
+			if(map.getZoom() != 11){
+				map.setZoom(11); //zoom out to see it better, will draw also
+			}else{
+				//force a draw
+				map.requestDraw();
+			}
+		}
+		function testPolyLine(){
+			var points = [
+				[18.50121284350313, -67.02502423159602], //isabela
+				[18.427831712734044, -67.154815531596], //aguadilla
+				[18.380158622329404, -67.18936743159603], //aguada
+				[18.395134387931233, -67.11445683159602], //moca
+			];
+			
+			lyPolyLine = zmap.polygonLayer.polyline(points, {});
+			lyPolyLine.addTo(map);
+			map.requestDraw();
+		}
+		function testCircle(){
+
+			
+			lyCircle = zmap.polygonLayer.circle([18.50519374209859, -67.12562263011934], {radius:50, strokeWidth: 6});
+			lyCircle.addTo(map);
+			
+			if(map.getZoom() != 18){
+				map.setZoom(18); //zoom out to see it better, will draw also
+			}else{
+				//force a draw
+				map.requestDraw();
+			}
+
+			
+		}
+        </script>
+    </head>
+    <body onload="runTest();">
+		<div id="mymap">
+
+		</div>
+	</body>
+</html>

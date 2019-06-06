@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="40" height="40" viewBox="0, 0, 40, 40">
+  <g id="zmap-poi-hospital" transform="translate(0, 0)">
+    <path d="M34,2 L6,2 C3.79,2 2.02,3.79 2.02,6 L2,34 C2,36.21 3.79,38 6,38 L34,38 C36.21,38 38,36.21 38,34 L38,6 C38,3.79 36.21,2 34,2 z M32,24 L24,24 L24,32 L16,32 L16,24 L8,24 L8,16 L16,16 L16,8 L24,8 L24,16 L32,16 L32,24 z" fill="#C74343"/>
+  </g>
+</svg>
