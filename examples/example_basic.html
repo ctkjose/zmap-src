@@ -3,7 +3,7 @@
         <title></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="../zmap/assets/zmap.css" crossorigin=""/>
-	<!--
+
 		<script src="../zmap/src/zmap_map.js"></script>
 		<script src="../zmap/src/zmap_utils.js"></script>	
 		<script src="../zmap/src/zmap_geo.js"></script>
@@ -12,8 +12,8 @@
 		<script src="../zmap/src/zmap_tileLayer.js"></script>
 		<script src="../zmap/src/zmap_polygonLayer.js"></script>
 		<script src="../zmap/src/zmap_markerLayer.js"></script>
-	-->
-		<script src="../zmap/zmap.js"></script>
+
+		<!-- <script src="../zmap/zmap.js"></script> -->
 		<script src="./polyAguadilla.js"></script>
 
         <script type="text/javascript">
@@ -32,7 +32,7 @@
 			zmap.osmLayer().addTo(map);
 			
 			map.requestDraw();
-			
+	
 
 			var markerAguadilla = zmap.marker([18.427831712734044, -67.154815531596], {
 				title: "Aguadilla",
@@ -55,7 +55,7 @@
 
 			console.log("Distance=%f, RadiansAngle=%f, Bearin=%f", d, c, bearin);
 			*/
-	
+
 		}
 		function testMarkers(){
 			var marker = zmap.marker([18.50519374209859, -67.12562263011934], {});
@@ -136,8 +136,7 @@
         </script>
     </head>
     <body onload="runTest();">
-		<div id="mymap">
-
-		</div>
+		ZMAP Basic Test
+		<div id="mymap"></div>
 	</body>
 </html>

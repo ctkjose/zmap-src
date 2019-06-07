@@ -45,7 +45,7 @@ self.zmap = {
 			x = x.toFixed(0);
 			y = y.toFixed(0);
 
-			return {x: x, y, y, z:z, scale:scale};
+			return {x: x, y: y, z:z, scale:scale};
 
 		},
 		//returns a point reperesenting a map coordinate from a pixel in map view port
@@ -94,6 +94,14 @@ self.zmap = {
 			this.center = new zmap.LatLng(lat, lng);
 			this.centerTile = this.center.toTilePoint(this.state.zoom);
 			return this;
+		},
+		updateMapDimensions: function(w, h){
+			if(typeof(w) !== "number") w = this.o.offsetWidth;
+			if(typeof(h) !== "number") w = this.o.offsetHeight;
+
+
+			this.container.w = w;
+			this.container.h = h;
 		},
 		installEventHandlers: function(){
 
@@ -186,33 +194,22 @@ self.zmap = {
 			return this;
 		},
 		requestDraw: function(){
+			//defer draw until browser is ready
 			var map = this;
-
-			map.draw();
-			/* this._redrawTimer = setTimeout(function(){
+			zmap.requestAnimation(function(){
 				map.draw();
-				map._redrawTimer = 0;
-			}, 500); */
+			});
 			return this;
 		},
 		draw: function(){
-			this.redrawLayers();
+			this.drawLayers();
+			this.publish("draw", map)
 		},
-		redrawLayers: function(){
+		drawLayers: function(){
 			for(var i in this.layers){
 				var o = this.layers[i];
 				o.refreshDOM(this);
 			}
-		},
-		//paints map in dom container
-		updateView: function(){
-			//defer draw until browser is ready
-			var map = this;
-			zmap.requestAnimation(function(){
-				map.requestDraw();
-			});
-
-			return this;
 		},
 		enforceBounds: function(point) {
 			return point;
@@ -324,7 +321,7 @@ self.zmap = {
 
 			this.center = this.centerTile.toLatLng(this.state.zoom);
             
-			this.updateView();
+			this.requestDraw();
 			this.state.isPanning = false;
 
 			this.publish('panned', [this, dx, dy]);

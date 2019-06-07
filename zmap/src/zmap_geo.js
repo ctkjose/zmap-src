@@ -734,17 +734,17 @@ zmap.LatLng.prototype.toUTM = function(earthRadius){
 
 	var coslon = Math.cos(lon), sinlon = Math.sin(lon), tanlon = Math.tan(lon);
 
-	var tanlat = Math.tan(lat); // τ ≡ tanφ, τʹ ≡ tanφʹ; prime (ʹ) indicates angles on the conformal sphere
-	var σ = Math.sinh(e * Math.atanh(e * tanlat/ Math.sqrt(1+tanlat*tanlat)) );
+	var tanlat = Math.tan(lat); // τ ≡ tanφ, T1 ≡ tanφʹ; prime (ʹ) indicates angles on the conformal sphere
+	var SIGMA = Math.sinh(e * Math.atanh(e * tanlat/ Math.sqrt(1+tanlat*tanlat)) );
 	
-	var τʹ = tanlat * Math.sqrt(1+ σ * σ) - σ * Math.sqrt(1+tanlat * tanlat);
+	var T1 = tanlat * Math.sqrt(1+ SIGMA * SIGMA) - SIGMA * Math.sqrt(1+tanlat * tanlat);
 
-	var ξʹ = Math.atan2(τʹ, coslon);
-    var ηʹ = Math.asinh(sinlon / Math.sqrt(τʹ * τʹ + coslon * coslon));
+	var Xi1 = Math.atan2(T1, coslon);
+    var H1 = Math.asinh(sinlon / Math.sqrt(T1 * T1 + coslon * coslon));
 
 	var A = a/(1+n) * (1 + 1/4*n2 + 1/64*n4 + 1/256*n6); // 2πA is the circumference of a meridian
 
-	const α = [ null, // note α is one-based array (6th order Krüger expressions)
+	var ALPHA = [ null, // note ALPHA is one-based array (6th order Krüger expressions)
             1/2*n - 2/3*n2 + 5/16*n3 +   41/180*n4 -     127/288*n5 +      7891/37800*n6,
                   13/48*n2 -  3/5*n3 + 557/1440*n4 +     281/630*n5 - 1983433/1935360*n6,
                            61/240*n3 -  103/140*n4 + 15061/26880*n5 +   167603/181440*n6,
@@ -752,38 +752,38 @@ zmap.LatLng.prototype.toUTM = function(earthRadius){
                                                      34729/80640*n5 - 3418889/1995840*n6,
                                                                   212378941/319334400*n6 ];
 
-	var ξ = ξʹ;
+	var Xi = Xi1;
     for (var j=1; j<=6; j++){
-		ξ += α[j] * Math.sin(2*j*ξʹ) * Math.cosh(2*j*ηʹ);
+		Xi += ALPHA[j] * Math.sin(2 * j * Xi1) * Math.cosh( 2 * j * H);
 	}
 
-	var η = ηʹ;
+	var H = H1;
     for (var j=1; j<=6; j++){
-		η += α[j] * Math.cos(2*j*ξʹ) * Math.sinh(2*j*ηʹ);
+		H += ALPHA[j] * Math.cos(2*j*Xi1) * Math.sinh(2*j*H);
 	}
 
-	var x = k0 * A * η;
-    var y = k0 * A * ξ;
+	var x = k0 * A * H;
+    var y = k0 * A * Xi;
 
     // ---- convergence: Karney 2011 Eq 23, 24
 
-    var pʹ = 1;
-    for (var j=1; j<=6; j++) pʹ += 2*j*α[j] * Math.cos(2*j*ξʹ) * Math.cosh(2*j*ηʹ);
-    var qʹ = 0;
-    for (var j=1; j<=6; j++) qʹ += 2*j*α[j] * Math.sin(2*j*ξʹ) * Math.sinh(2*j*ηʹ);
+    var pK = 1;
+    for (var j=1; j<=6; j++) pK += 2 * j * ALPHA[j] * Math.cos(2 * j * Xi1) * Math.cosh( 2 * j * H);
+    var qK = 0;
+    for (var j=1; j<=6; j++) qK += 2 * j * ALPHA[j] * Math.sin(2 * j * Xi1) * Math.sinh( 2 * j * H);
 
-	var γʹ = Math.atan(τʹ / Math.sqrt(1 + τʹ * τʹ) * tanlon);
-    var γʺ = Math.atan2(qʹ, pʹ);
+	var kY1 = Math.atan(T1 / Math.sqrt(1 + T1 * T1) * tanlon);
+    var kY2 = Math.atan2(qK, pK);
 
-	var γ = γʹ + γʺ;
+	var GAMMA = kY1 + kY2;
 
     // ---- scale: Karney 2011 Eq 25
 
     var sinlat = Math.sin(lat);
-    var kʹ = Math.sqrt(1 - e*e*sinlat*sinlat) * Math.sqrt(1 + tanlat*tanlat) / Math.sqrt(τʹ*τʹ + coslon*coslon);
-    var kʺ = A / a * Math.sqrt(pʹ*pʹ + qʹ*qʹ);
+    var kK1 = Math.sqrt(1 - e*e*sinlat*sinlat) * Math.sqrt(1 + tanlat*tanlat) / Math.sqrt(T1*T1 + coslon*coslon);
+    var kK2 = A / a * Math.sqrt(pK*pK + qK*qK);
 
-    var k = k0 * kʹ * kʺ;
+    var k = k0 * kK1 * kK2;
 
 
 	// ------------
@@ -794,7 +794,7 @@ zmap.LatLng.prototype.toUTM = function(earthRadius){
     // round to reasonable precision
     x = Number(x.toFixed(6)); // nm precision
     y = Number(y.toFixed(6)); // nm precision
-    var convergence = Number( (γ/deg2rad).toFixed(9));
+    var convergence = Number( (GAMMA/deg2rad).toFixed(9));
     var scale = Number(k.toFixed(12));
 
     var h = this.lat>=0 ? 'N' : 'S'; // hemisphere
