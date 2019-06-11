@@ -13,7 +13,7 @@ zmap.osmLayer = function(){
 //implemets the basic slippy map tiles...
 
 zmap.tileLayer = function(options){
-
+	this.cache = {}; //tile cache
 	this.options = zmap.decorate(
 		{ tileSize: 256, subdomains: [ 'a', 'b', 'c' ] }
 		, options
@@ -56,7 +56,7 @@ zmap.tileLayer.prototype = {
 		INCACHE: 10,
 		NOTLOADED: 500,
 	},
-	cache : {}, //tile cache
+	
 	computeBounds: function(owner){
 		var tz = this.options.tileSize;
 		var z = owner.zoom;		
@@ -75,7 +75,7 @@ zmap.tileLayer.prototype = {
 	},
 	
 	activateZoomLayer: function(z){
-		var zo = zmap.dom.get("[data-zoom=\"" + z + "\"]");
+		var zo = zmap.dom.get("[data-zoom=\"" + z + "\"]", this.o);
 		if(zo) return zo;
 	},
 	buildZoomLayer: function(z){

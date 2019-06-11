@@ -3,6 +3,7 @@
         <title></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="../zmap/assets/zmap.css" crossorigin=""/>
+		<link rel="stylesheet" href="./awd_roads.css" crossorigin=""/>
 
 		<script src="../zmap/src/zmap_map.js"></script>
 		<script src="../zmap/src/zmap_utils.js"></script>	
@@ -15,6 +16,8 @@
 
 		<!-- <script src="../zmap/zmap.js"></script> -->
 		<script src="./polyAguadilla.js"></script>
+		<script src="./lemay_road.js"></script>
+		<script src="./road_segment.js"></script>
 
         <script type="text/javascript">
 		function runTest(){
@@ -22,40 +25,49 @@
 			//Set Map Options
 			//zmap.configure({"test":"jose"});
 
-			map = zmap.create("#mymap", {zoom: 15, center:[18.427831712734044, -67.154815531596], maxZoom: 19, minZoom:1});
+			map = zmap.create("#mymap", {zoom: 16, center:[18.50519374209859, -67.12562263011934], maxZoom: 19, minZoom:1});
 
 			//osm = new zmap.tileLayer("https://{S}.tile.openstreetmap.org/{Z}/{X}/{Y}.png", [ 'a', 'b', 'c' ]);
 			//map.addLayer(osm);
 
 			//var osm = zmap.osmLayer();
 			//osm.addTo(map);
-			zmap.osmLayer().addTo(map);
 			
-			map.requestDraw();
-	
+			zmap.osmLayer().addTo(map);
 
-			var markerAguadilla = zmap.marker([18.427831712734044, -67.154815531596], {
-				title: "Aguadilla",
-				iconURL: "zmap-marker-green.svg",
-				opacity: 0.7
-			});
-			markerAguadilla.addTo(map);
-			//move a marker
-			//marker.setLatLng([18.470308, -66.123490]);
-
-		
 			/*
-			var p1 = zmap.LatLng(50.06638888888889, -5.714722222222222);
-			var p2 = zmap.LatLng(58.64388888888889, -3.0700000000000003);
-
-			var c = zmap.LatLng.angle(p1,p2);
-			var d = zmap.LatLng.distance(p1,p2);
-
-			var bearin = zmap.LatLng.bearing(p1,p2);
-
-			console.log("Distance=%f, RadiansAngle=%f, Bearin=%f", d, c, bearin);
+			var esriOps = {
+				url: "https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{Z}/{Y}/{X}",
+				subdomains: [],
+				tilesize: 256
+			};
+			var esriWorld = new zmap.tileLayer(esriOps);
+			map.addLayer(esriWorld);
 			*/
 
+			/*
+			var def_usgsTopo = {
+				url: "https://basemap.nationalmap.gov/ArcGIS/rest/services/USGSTopo/MapServer/tile/{Z}/{Y}/{X}",
+				subdomains: [],
+				tilesize: 256
+			};
+			var usgsTopo = new zmap.tileLayer(def_usgsTopo);
+			usgsTopo.addTo(map);
+			*/
+
+			
+			/*
+			//Stamen UTM Grid Overlay
+			(new zmap.tileLayer({
+				url: "http://{S}.tile.stamen.com/utm/{Z}/{X}/{Y}.png",
+				subdomains:  [ 'a', 'b', 'c' ],
+			})).addTo(map);
+			*/
+
+			ly1 = new zmap.roadLayer(lemayRd);
+			ly1.addTo(map);
+			map.requestDraw();
+			
 		}
 		function testUTM(){
 			

@@ -1,0 +1,27 @@
+
+circle.rd-nd {
+	stroke: #E1C277;
+	fill: #F8ECAF;
+	stroke-width: 1
+}
+circle.rd-nd-start {
+	stroke: #0E934F;
+	fill: #7ACB93;
+	stroke-width: 1
+}
+circle.rd-nd-end {
+	stroke: #AB332E;
+	fill: #FA3E37;
+	stroke-width: 1
+}
+circle.rd-nd-selected {
+	stroke: #3F8AFF;
+	fill: #F5F5F5;
+	animation: ndpulsate 3s ease-out;
+	animation-iteration-count: infinite;
+}
+@keyframes ndpulsate {
+  0%    { stroke-opacity:1; stroke-width: 1; }
+  50%   { stroke-opacity:0.4; stroke-width: 5; }
+  100%  { stroke-opacity:1; stroke-width: 1; }
+}

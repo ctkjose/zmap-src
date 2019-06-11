@@ -391,6 +391,7 @@ zmap.LatLng.prototype = {
 		return new zmap.LatLng(lat2, lng2);
 	},
 	isInsidePolygon: function(locations) {
+		// ray-casting algorithm
 		var polyPoints = locations; //an array of arrays [lat,lng]
 		var x = this.lat, y = this.lng;
 		
@@ -692,7 +693,7 @@ zmap.point.interpolate = function(p1, p2, t) {
 
 //https://cdn.jsdelivr.net/npm/geodesy@2.0.1/utm.js
 zmap.LatLng.prototype.toUTM = function(earthRadius){
-	var a = 6371000;
+	var a = zmap.geo.wgs84.kEarthRadius;
 	if (earthRadius) a = earthRadius;
 	var f = 1/298.257223563
 	var digits = 0; //used to format utm string
@@ -735,9 +736,9 @@ zmap.LatLng.prototype.toUTM = function(earthRadius){
 	var coslon = Math.cos(lon), sinlon = Math.sin(lon), tanlon = Math.tan(lon);
 
 	var tanlat = Math.tan(lat); // τ ≡ tanφ, T1 ≡ tanφʹ; prime (ʹ) indicates angles on the conformal sphere
-	var SIGMA = Math.sinh(e * Math.atanh(e * tanlat/ Math.sqrt(1+tanlat*tanlat)) );
+	var SIGMA = Math.sinh(e * Math.atanh(e * tanlat / Math.sqrt(1 + tanlat * tanlat)) );
 	
-	var T1 = tanlat * Math.sqrt(1+ SIGMA * SIGMA) - SIGMA * Math.sqrt(1+tanlat * tanlat);
+	var T1 = tanlat * Math.sqrt(1 + SIGMA * SIGMA) - SIGMA * Math.sqrt(1 + tanlat * tanlat);
 
 	var Xi1 = Math.atan2(T1, coslon);
     var H1 = Math.asinh(sinlon / Math.sqrt(T1 * T1 + coslon * coslon));
@@ -754,12 +755,12 @@ zmap.LatLng.prototype.toUTM = function(earthRadius){
 
 	var Xi = Xi1;
     for (var j=1; j<=6; j++){
-		Xi += ALPHA[j] * Math.sin(2 * j * Xi1) * Math.cosh( 2 * j * H);
+		Xi += ALPHA[j] * Math.sin(2 * j * Xi1) * Math.cosh( 2 * j * H1);
 	}
 
 	var H = H1;
     for (var j=1; j<=6; j++){
-		H += ALPHA[j] * Math.cos(2*j*Xi1) * Math.sinh(2*j*H);
+		H += ALPHA[j] * Math.cos(2 * j * Xi1) * Math.sinh(2* j * H1);
 	}
 
 	var x = k0 * A * H;
@@ -768,9 +769,9 @@ zmap.LatLng.prototype.toUTM = function(earthRadius){
     // ---- convergence: Karney 2011 Eq 23, 24
 
     var pK = 1;
-    for (var j=1; j<=6; j++) pK += 2 * j * ALPHA[j] * Math.cos(2 * j * Xi1) * Math.cosh( 2 * j * H);
+    for (var j=1; j<=6; j++) pK += 2 * j * ALPHA[j] * Math.cos(2 * j * Xi1) * Math.cosh( 2 * j * H1);
     var qK = 0;
-    for (var j=1; j<=6; j++) qK += 2 * j * ALPHA[j] * Math.sin(2 * j * Xi1) * Math.sinh( 2 * j * H);
+    for (var j=1; j<=6; j++) qK += 2 * j * ALPHA[j] * Math.sin(2 * j * Xi1) * Math.sinh( 2 * j * H1);
 
 	var kY1 = Math.atan(T1 / Math.sqrt(1 + T1 * T1) * tanlon);
     var kY2 = Math.atan2(qK, pK);

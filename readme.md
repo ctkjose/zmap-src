@@ -2,22 +2,21 @@
 
 (WIP! See WIP status...)
 
-ZMAP is a small vanilla javascript library to render interactive maps similar to [Leaflet.js](https://leafletjs.com), `OpenLayers` or `MapBox` build by [ExponentialWorks](https://exponentialworks.com).
+ZMAP is a minimalistic library to render interactive maps similar to [Leaflet.js](https://leafletjs.com), `OpenLayers` or `MapBox` made in plain vanilla javascript by [ExponentialWorks](https://exponentialworks.com).
 
-ZMAP is just the core functionality that most of us really need. Is meant to be minimal, without dependancies, no third-party libraries and just good old javascript code that works in most mobile and desktop browsers. (It doesn't even use any sassy ES6 features!!!)
+ZMAP is just the core functionality that most of us really need. Is meant to be minimal, without dependancies, no third-party libraries and just good old javascript code that works in most mobile and desktop browsers. (It doesn't even use any of ES6 sassy constructs or syntax!!!)
 
 The code is easy to hack and modify. The zmap library doesn't require any special development environment or build tool chain.
 
-Our goal is to kkep the code base small and compact, we include the features most commonly used and make many assumptions about the use cases to simplify the code. 
+Our goal is to keep the code base small and compact, we include the features most commonly used and make many assumptions about the use cases to simplify the code. 
 
 ZMAP is build to work out of the box with [OpenStreetMap](https://www.openstreetmap.org) (OSM) and OSM APIs like Nominatim and Overpass. (You may also use other tile providers [slippy maps](https://en.wikipedia.org/wiki/Tiled_web_map).) A lot of the code follows OSM coneventions. The code uses [web-mercator](https://wiki.openstreetmap.org/wiki/Mercator) (pseudo mercator projection), [WGS84](https://gisgeography.com/wgs84-world-geodetic-system/) and [North American Datum](https://www.ngs.noaa.gov/datums/horizontal/north-american-datum-1983.shtml) with GRS80 (Geodetic Reference System Ellipsoid) of 6378137.
 
 ZMAP include functionality for markers, polygons, circles, polylines, and many useful geospatial functions.
 
-ZMAP was born from [modestmaps](https://github.com/modestmaps/modestmaps-js) the original library behind "mapbox.js". It attempts to have an API similar to [Leaflet.js](https://leafletjs.com).
+ZMAP was born from [modestmaps](https://github.com/modestmaps/modestmaps-js) the original library behind the early days of "mapbox". It attempts to have an API similar to [Leaflet.js](https://leafletjs.com).
 
 A lot of the fancy geospatial code in ZMAP is from the great mind of Chris Veness and his [Latitude/longitude spherical geodesy tools](https://github.com/chrisveness/geodesy) .
-
 
 
 ### WIP Status ###
@@ -33,6 +32,8 @@ Ability to get a LatLng in UTM and USNG/MGRS/NATO coordinates is implemented. Mo
 ZMAP is build on the WGS84 datum/projection. Code is in place to be able to add support for other projections and datums, but not a priority.
 
 Tile Cache is not smart and will keep growing as big as your browser allows it. This should not be an issue for most use cases but I want to add logic to purge cache by aging or size.
+
+Add suport to create marker layer from a GeoJSON `FeatureCollection` or array of features.
 
 
 
@@ -84,7 +85,7 @@ Available options are (All options are *optional*...):
 | opacity | number | The opacity of
 | cssClass | string | A css class name added to the marker's div. |
 | cssStyle | string | A css style string used for the marker's div initial style. |
-| buildMarker | function | An optional function to build the DOM representation of the marker.  The function must follow the signature `function(marker)`. This function must return a valid DOMElement or a string with the contents of the marker. |
+| buildMarker | function | An optional factory function to build the DOM representation of the marker.  The function must follow the signature `function(marker)`. This function must return a valid DOMElement or a string with the contents of the marker. |
 | updatePosition | function | An optional function to allow you to recompute the position of the marker in the map view. The function must follow the signature `function(marker, map)`. |
 | refreshDOM | function | An optional function to allow you to rebuild the markers DOM. The function must follow the signature `function(marker, map)`. The markers main domElement is a `div` available in the property `marker.o`. |
 | html | string | Valid html content to be placed inside the marker's div. |
